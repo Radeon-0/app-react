@@ -1,17 +1,45 @@
+import { Component } from 'react';
 import './employees-list-item.css';
 
-const EmployeesListItem = ({ name, salary, increase }) => {
+class EmployeesListItem extends Component {
 
-    const className = `list-group-item d-flex justify-content-between${increase ? ' increase' : ''}`;
+    constructor(props){
+        super(props);
+        this.state = {
+            increase:false,
+            like:false,
+        };
+    }
+
+    onIncrease = () =>{
+        this.setState(({increase})=>({
+            increase: !increase
+        }));
+    }
+
+    onLike = () =>{
+        this.setState(({like})=>({
+            like: !like
+        }));
+    }
+
+
+    render(){
+
+        const {name, salary } = this.props;
+        const {increase,like} = this.state;
+
+
+        const className = `list-group-item d-flex justify-content-between${increase ? ' increase' : ''} ${like ? ' like' : ''}`;
     
     return (
         <li className={className}>
-            <span className="list-group-item-label">{name}</span>
+            <span className="list-group-item-label" onClick={this.onLike}>{name}</span>
             <input type="text" className="list-group-item-input" defaultValue={salary + "$"} />
             <div className='d-flex justify-content-center align-items-center'>
                 <button type="button"
                     className="btn-cookie btn-sm ">
-                    <i className="fas fa-cookie"></i>
+                    <i className="fas fa-cookie" onClick={this.onIncrease}></i>
                 </button>
 
                 <button type="button"
@@ -22,6 +50,49 @@ const EmployeesListItem = ({ name, salary, increase }) => {
             </div>
         </li>
     );
+    }
+
 }
 
 export default EmployeesListItem;
+
+
+
+
+
+
+
+
+
+
+
+// 
+
+// import { Component } from 'react';
+// import './employees-list-item.css';
+
+// const EmployeesListItem = ({ name, salary, increase }) => {
+
+//     const className = `list-group-item d-flex justify-content-between${increase ? ' increase' : ''}`;
+    
+//     return (
+//         <li className={className}>
+//             <span className="list-group-item-label">{name}</span>
+//             <input type="text" className="list-group-item-input" defaultValue={salary + "$"} />
+//             <div className='d-flex justify-content-center align-items-center'>
+//                 <button type="button"
+//                     className="btn-cookie btn-sm ">
+//                     <i className="fas fa-cookie"></i>
+//                 </button>
+
+//                 <button type="button"
+//                     className="btn-trash btn-sm ">
+//                     <i className="fas fa-trash"></i>
+//                 </button>
+//                 <i className="fas fa-star"></i>
+//             </div>
+//         </li>
+//     );
+// }
+
+// export default EmployeesListItem;
