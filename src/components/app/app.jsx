@@ -12,9 +12,9 @@ class App extends Component {
         super(props);
         this.state = {
             data: [
-                { name: "Jony", salary: 800, increase: false, id: 1 },
-                { name: "Alex", salary: 950, increase: true, id: 2 },
-                { name: "Djimi", salary: 1500, increase: false, id: 3 }
+                { name: "Jony", salary: 800, increase: false, rise: true, id: 1 },
+                { name: "Alex", salary: 950, increase: true, rise: true, id: 2 },
+                { name: "Djimi", salary: 1500, increase: false, rise: false, id: 3 }
             ]
         }
     }
@@ -27,6 +27,19 @@ class App extends Component {
         });
     }
 
+    onToggleProp = (id,prop) => {
+
+        this.setState(({ data }) => ({
+            data: data.map(item => {
+                if (item.id === id) {
+                    return { ...item, [prop]: !item[prop] }
+                }
+                return item;
+            })
+        }));
+
+    }
+
 
     addItem = (name, salary) => {
 
@@ -35,6 +48,7 @@ class App extends Component {
             name,
             salary: Number(salary),
             increase: false,
+            rise: false,
             id: id
         };
 
@@ -47,9 +61,11 @@ class App extends Component {
 
 
     render() {
+        const employees = this.state.data.length;
+        const increased = this.state.data.filter(item => item.increase).length;
         return (
             <div className="app">
-                <AppInfo></AppInfo>
+                <AppInfo employees={employees} increased={increased}></AppInfo>
 
                 <div className="search-panel">
                     <SerachPanel></SerachPanel>
@@ -59,6 +75,7 @@ class App extends Component {
                     <EmployeesList
                         data={this.state.data}
                         onDelete={this.deleteItem}
+                        onToggleProp={this.onToggleProp}
                     ></EmployeesList>
                 </nav>
                 <EmployeesAddForm onAdd={this.addItem} ></EmployeesAddForm>
