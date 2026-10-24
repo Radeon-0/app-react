@@ -1,7 +1,13 @@
-import "./app-filter.css";
+//import "./app-filter.css";
+
+import styled from "styled-components";
 
 const AppFilter = (props) => {
 
+
+    const BtnGroup  = styled.div`
+        margin-top: 20px;
+    `
     const buttonsData = [
         { name: 'all', label: 'Все сотрудники' },
         { name: 'rise', label: 'На повышение' },
@@ -16,16 +22,16 @@ const AppFilter = (props) => {
         return (
             <button className={`btn ${clazz}`}
                 key={name}
-                onClick={()=>{props.onFilterSelect(name)}}>
+                onClick={() => { props.onFilterSelect(name) }}>
                 {label}
             </button>
         );
     })
 
     return (
-        <div className="btn-group">
+        <BtnGroup className="btn-group">
             {buttons}
-        </div>
+        </BtnGroup>
     );
 }
 export default AppFilter;

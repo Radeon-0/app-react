@@ -4,7 +4,8 @@ import SerachPanel from '../search-panel/search-panel';
 import AppFilter from '../app-filter/app-filter';
 import EmployeesList from '../employees-list/employees-list';
 import EmployeesAddForm from '../employees-add-form/employees-add-form';
-import './app.css'
+import styled from 'styled-components';
+//import './app.css'
 
 class App extends Component {
 
@@ -20,6 +21,9 @@ class App extends Component {
             filter: 'all',
         }
     }
+
+
+
 
     deleteItem = (id) => {
         this.setState(({ data }) => {
@@ -84,23 +88,31 @@ class App extends Component {
         }
     }
 
-    onFilterSelect = (filter) =>{
-        this.setState({filter});
+    onFilterSelect = (filter) => {
+        this.setState({ filter });
     }
 
 
 
     render() {
 
+        const AppStyled = styled.div`
+                margin: 0 auto;
+                max-width: 1000px;
+        `;
+
         const { data, term, filter } = this.state;
 
         const employees = this.state.data.length;
         const increased = this.state.data.filter(item => item.increase).length;
 
-        const visibleData = this.filterPost(this.searchEmp(data, term),filter);
+        const visibleData = this.filterPost(this.searchEmp(data, term), filter);
+
+
+
 
         return (
-            <div className="app">
+            <AppStyled className="app">
                 <AppInfo employees={employees} increased={increased}></AppInfo>
 
                 <div className="search-panel">
@@ -115,7 +127,7 @@ class App extends Component {
                     ></EmployeesList>
                 </nav>
                 <EmployeesAddForm onAdd={this.addItem} ></EmployeesAddForm>
-            </div>
+            </AppStyled>
         );
     }
 }
